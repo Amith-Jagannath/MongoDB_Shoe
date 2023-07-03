@@ -1,4 +1,15 @@
 {
+  "name": "sneakx",
+  "version": "1.0.0",
+  "description": "node express shoe page",
+  "main": "server.js",
+  "engines": {
+    "node": "14.x"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit"
+  },
   "dependencies": {
     "body-parser": "^1.20.1",
     "cookie-parser": "^1.4.6",
@@ -8,6 +19,7 @@
     "hbs": "^4.2.0",
     "json-merger": "^1.1.9",
     "mongoose": "^6.8.1",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "@vercel/analytics": "^0.1.6"
   }
 }

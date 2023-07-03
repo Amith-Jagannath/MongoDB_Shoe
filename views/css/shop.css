@@ -1,5 +1,4 @@
-
-  .nav-link {
+.nav-link {
   color: black !important;
 }
 
@@ -16,7 +15,9 @@
   padding-right: 0;
   padding-left: 0;
 }
-
+#jordan-section {
+  background-image: url(/views/assests/images/nike-just-do-it.jpg);
+}
 .filtericon {
   width: 15px;
   height: 15px;
