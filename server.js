@@ -39,7 +39,7 @@ const oneDay = 20;
 
 mongoose
   .connect(
-    "mongodb+srv://amyth2002:Soorenji%40456@cluster0.bzzlyno.mongodb.net/sneak?retryWrites=true&w=majority",
+    "mongodb+srv://amyth2002:Soorenji%40456@cluster0.bzzlyno.mongodb.net/sneak",
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
