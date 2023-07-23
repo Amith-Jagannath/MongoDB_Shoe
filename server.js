@@ -173,6 +173,7 @@ const createDoc = async () => {
 console.log("Yepp");
 console.log(path);
 var session;
+
 app.get("/", function (req, res) {
   //used to identify user sessions
   res.sendFile(path + "/index.html");
@@ -182,6 +183,13 @@ app.get("/favicon.ico", (req, res) => {
   // Replace 'path/to/favicon.ico' with the actual path to your favicon file
   const faviconPath = "/views/assests/favicon.ico";
   res.sendFile(faviconPath);
+});
+
+app.use((err, req, res, next) => {
+  console.error(err); // Log the error for debugging purposes
+
+  // Send an appropriate error response to the client
+  res.status(500).send("Something went wrong!");
 });
 app.post("/home", async function (req, res) {
   res.sendFile(path + "/index.html");
