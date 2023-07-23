@@ -36,7 +36,7 @@ const oneDay = 20;
 //   .catch((e) => {
 //     console.log(e);
 //   });
-
+mongoose.set("strictQuery", false);
 mongoose
   .connect(
     "mongodb+srv://amyth2002:Soorenji%40456@cluster0.bzzlyno.mongodb.net/sneak",
@@ -176,6 +176,12 @@ var session;
 app.get("/", function (req, res) {
   //used to identify user sessions
   res.sendFile(path + "/index.html");
+});
+app.get("/favicon.ico", (req, res) => {
+  // const faviconPath = 'C:\Users\amyth\OneDrive\Documents\sneak\views\assests\favicon.ico';
+  // Replace 'path/to/favicon.ico' with the actual path to your favicon file
+  const faviconPath = "/views/assests/favicon.ico";
+  res.sendFile(faviconPath);
 });
 app.post("/home", async function (req, res) {
   res.sendFile(path + "/index.html");
