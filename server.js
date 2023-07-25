@@ -20,6 +20,8 @@ const { handlebars } = require("hbs");
 const cookieParser = require("cookie-parser"); //used to store cookies for user sessions
 const sessions = require("express-session");
 const jsonMerger = require("json-merger");
+let server_port = process.env.YOUR_PORT || process.env.PORT || 9000;
+console.log(server_port);
 // const oneDay = 1000 * 60 * 60 * 24;
 const oneDay = 20;
 // const path = __dirname; //+ "/public/views";
@@ -61,8 +63,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
-var server_port = process.env.YOUR_PORT || process.env.PORT || 9000;
-console.log(server_port);
+
 app.use(
   sessions({
     //this the data sent and stored in brower cookie
