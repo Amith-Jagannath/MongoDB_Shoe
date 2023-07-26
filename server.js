@@ -18,7 +18,7 @@ const mongoose = require("mongoose"); //package to connect to db
 const hbs = require("express-handlebars"); //used for hbs file soo as to use js componenets for displaying images
 const { handlebars } = require("hbs");
 const cookieParser = require("cookie-parser"); //used to store cookies for user sessions
-const sessions = require("express-session");
+// const sessions = require("express-session");
 const jsonMerger = require("json-merger");
 let server_port = process.env.YOUR_PORT || process.env.PORT || 9000;
 console.log(server_port);
@@ -64,15 +64,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(
-  sessions({
-    //this the data sent and stored in brower cookie
-    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
-    saveUninitialized: true,
-    cookie: { maxAge: oneDay },
-    resave: false,
-  })
-);
+// app.use(
+//   sessions({
+//     //this the data sent and stored in brower cookie
+//     secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
+//     saveUninitialized: true,
+//     cookie: { maxAge: oneDay },
+//     resave: false,
+//   })
+// );
 
 app.listen(server_port, function () {
   console.log("Listening on port %d", server_port);
@@ -173,7 +173,9 @@ const createDoc = async () => {
 // createDoc();
 console.log("Yepp");
 console.log(path);
-var session;
+const session = {
+  userid: "amithjagannath02@gmail.com",
+};
 
 app.get("/", function (req, res) {
   //used to identify user sessions
@@ -241,32 +243,32 @@ app.post("/register", async function (req, res) {
   }
 });
 
-app.post("/login", async function (req, res) {
-  try {
-    const values = req.body;
-    session = req.session;
-    console.log(values);
-    if (!values.email || !values.password) {
-      res.sendFile(path + "/index.html");
-    } else {
-      data = await Customer.find({ email: values.email });
-      if (!data[0]) {
-        res.render("index"); //res.render("index", { message: "Email has not been registered!!" });
-      } else {
-        if (data[0].password === values.password) {
-          session.userid = values.email;
-          console.log(session.userid);
-          res.sendFile(path + "/index.html");
-        } else {
-          res.sendFile(path + "/index.html");
-        }
-      }
-    }
-  } catch (e) {
-    console.log(e);
-    res.status(400).send(e);
-  }
-});
+// app.post("/login", async function (req, res) {
+//   try {
+//     const values = req.body;
+//     session = req.session;
+//     console.log(values);
+//     if (!values.email || !values.password) {
+//       res.sendFile(path + "/index.html");
+//     } else {
+//       data = await Customer.find({ email: values.email });
+//       if (!data[0]) {
+//         res.render("index"); //res.render("index", { message: "Email has not been registered!!" });
+//       } else {
+//         if (data[0].password === values.password) {
+//           session.userid = values.email;
+//           console.log(session.userid);
+//           res.sendFile(path + "/index.html");
+//         } else {
+//           res.sendFile(path + "/index.html");
+//         }
+//       }
+//     }
+//   } catch (e) {
+//     console.log(e);
+//     res.status(400).send(e);
+//   }
+// });
 
 app.post("/individualshoe", async function (req, res) {
   const val = req.body.product_id;
@@ -441,7 +443,7 @@ app.post("/cart", async function (req, res) {
     ]);
 
     // const resul = await cart_product.find({});
-    console.log(ans);
+    // console.log(ans);
     // const resu = await Product_cart.find({});
     res.render(path + "/cart.hbs", { info: ans });
   }
@@ -457,11 +459,14 @@ app.post("/checkout", async function (req, res) {
 });
 app.post("/delete", async function (req, res) {
   console.log("delete");
+  console.log(session.userid);
   console.log(req.body.id);
   const shoe = await Product.find({ product_id: req.body.id });
-  await Cart.deleteOne({
-    $and: [{ customer_id: session.userid }, { prod_id: req.body.id }],
-  });
+  console.log(
+    await Cart.deleteOne({
+      $and: [{ cus_id: session.userid }, { prod_id: req.body.id }],
+    })
+  );
   const ans = await Cart.aggregate([
     [
       {
@@ -494,7 +499,7 @@ app.post("/delete", async function (req, res) {
       },
     ],
   ]);
-  console.log(ans);
+  // console.log(ans);
   res.render(path + "/cart.hbs", { info: ans });
 });
 
