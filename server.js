@@ -197,330 +197,330 @@ app.use((err, req, res, next) => {
 app.post("/home", async function (req, res) {
   res.sendFile(path + "/index.html");
 });
-app.post("/shoes", async function (req, res) {
-  const shoes_details = await Product.find({});
-  //   res.send(shoes_details);
-  // console.log(shoes_details);
-  // console.log(shoes_details);
-  res.render(path + "/shop.hbs", { info: shoes_details });
-});
+// app.post("/shoes", async function (req, res) {
+//   const shoes_details = await Product.find({});
+//   //   res.send(shoes_details);
+//   // console.log(shoes_details);
+//   // console.log(shoes_details);
+//   res.render(path + "/shop.hbs", { info: shoes_details });
+// });
 
-app.post("/register", async function (req, res) {
-  try {
-    const values = req.body;
-    if (
-      !values.email ||
-      !values.username ||
-      !values.password ||
-      !values.number
-    ) {
-      res.sendFile(path + "/index.html");
-    } else {
-      const data = await Customer.findOne({ email: values.email });
-
-      console.log(Boolean(data));
-      if (Boolean(data)) res.sendFile(path + "/index.html");
-      else {
-        if (!validatePhone(req.body.number))
-          res.render("index", { message: "Phone number doesn't exist" });
-        const entry1 = new Customer({
-          username: req.body.username,
-          email: req.body.email,
-          password: req.body.password,
-          number: req.body.number,
-        });
-        // await entry1.save();
-        console.log(entry1);
-      }
-    }
-    res.sendFile(path + "/index.html");
-    // res.status(201).sendFile(path + "/index.html");
-
-    // res.redirect("/index.html", { user: username });
-  } catch (e) {
-    console.log(e);
-    res.status(400).send(e);
-  }
-});
-
-// app.post("/login", async function (req, res) {
+// app.post("/register", async function (req, res) {
 //   try {
 //     const values = req.body;
-//     session = req.session;
-//     console.log(values);
-//     if (!values.email || !values.password) {
+//     if (
+//       !values.email ||
+//       !values.username ||
+//       !values.password ||
+//       !values.number
+//     ) {
 //       res.sendFile(path + "/index.html");
 //     } else {
-//       data = await Customer.find({ email: values.email });
-//       if (!data[0]) {
-//         res.render("index"); //res.render("index", { message: "Email has not been registered!!" });
-//       } else {
-//         if (data[0].password === values.password) {
-//           session.userid = values.email;
-//           console.log(session.userid);
-//           res.sendFile(path + "/index.html");
-//         } else {
-//           res.sendFile(path + "/index.html");
-//         }
+//       const data = await Customer.findOne({ email: values.email });
+
+//       console.log(Boolean(data));
+//       if (Boolean(data)) res.sendFile(path + "/index.html");
+//       else {
+//         if (!validatePhone(req.body.number))
+//           res.render("index", { message: "Phone number doesn't exist" });
+//         const entry1 = new Customer({
+//           username: req.body.username,
+//           email: req.body.email,
+//           password: req.body.password,
+//           number: req.body.number,
+//         });
+//         // await entry1.save();
+//         console.log(entry1);
 //       }
 //     }
+//     res.sendFile(path + "/index.html");
+//     // res.status(201).sendFile(path + "/index.html");
+
+//     // res.redirect("/index.html", { user: username });
 //   } catch (e) {
 //     console.log(e);
 //     res.status(400).send(e);
 //   }
 // });
 
-app.post("/individualshoe", async function (req, res) {
-  const val = req.body.product_id;
+// // app.post("/login", async function (req, res) {
+// //   try {
+// //     const values = req.body;
+// //     session = req.session;
+// //     console.log(values);
+// //     if (!values.email || !values.password) {
+// //       res.sendFile(path + "/index.html");
+// //     } else {
+// //       data = await Customer.find({ email: values.email });
+// //       if (!data[0]) {
+// //         res.render("index"); //res.render("index", { message: "Email has not been registered!!" });
+// //       } else {
+// //         if (data[0].password === values.password) {
+// //           session.userid = values.email;
+// //           console.log(session.userid);
+// //           res.sendFile(path + "/index.html");
+// //         } else {
+// //           res.sendFile(path + "/index.html");
+// //         }
+// //       }
+// //     }
+// //   } catch (e) {
+// //     console.log(e);
+// //     res.status(400).send(e);
+// //   }
+// // });
 
-  const shoes_det = await Product.findOne({ product_id: val });
-  console.log(shoes_det);
-  console.log(val);
-  res.render(path + "/detail.hbs", { info: shoes_det });
-  console.log("yes");
-});
-console.log(path);
-app.post("/nike", async function (req, res) {
-  console.log("yes");
-  const nike = await Product.find({ name: "nike" });
-  console.log(nike);
+// app.post("/individualshoe", async function (req, res) {
+//   const val = req.body.product_id;
 
-  // res.render("shop", { info: nike });
-  res.render(path + "/shop.hbs", { info: nike });
-  // res.send("nike");
-});
+//   const shoes_det = await Product.findOne({ product_id: val });
+//   console.log(shoes_det);
+//   console.log(val);
+//   res.render(path + "/detail.hbs", { info: shoes_det });
+//   console.log("yes");
+// });
+// console.log(path);
+// app.post("/nike", async function (req, res) {
+//   console.log("yes");
+//   const nike = await Product.find({ name: "nike" });
+//   console.log(nike);
 
-app.post("/puma", async function (req, res) {
-  const puma = await Product.find({ name: "puma" });
-  res.render(path + "/shop.hbs", { info: puma });
-});
-app.post("/addidas", async function (req, res) {
-  const adidas = await Product.find({ name: "adidas" });
-  res.render(path + "/shop.hbs", { info: adidas });
-});
-app.post("/sparx", async function (req, res) {
-  const sparx = await Product.find({ name: "sparx" });
-  res.render(path + "/shop.hbs", { info: sparx });
-});
+//   // res.render("shop", { info: nike });
+//   res.render(path + "/shop.hbs", { info: nike });
+//   // res.send("nike");
+// });
 
-app.post("/search_box", async function (req, res) {
-  const name = req.body.shoe_name.toLowerCase();
-  const shoes = await Product.find({ name: name });
-  res.render(path + "/shop.hbs", { info: shoes });
-});
+// app.post("/puma", async function (req, res) {
+//   const puma = await Product.find({ name: "puma" });
+//   res.render(path + "/shop.hbs", { info: puma });
+// });
+// app.post("/addidas", async function (req, res) {
+//   const adidas = await Product.find({ name: "adidas" });
+//   res.render(path + "/shop.hbs", { info: adidas });
+// });
+// app.post("/sparx", async function (req, res) {
+//   const sparx = await Product.find({ name: "sparx" });
+//   res.render(path + "/shop.hbs", { info: sparx });
+// });
 
-app.post("/male", async function (req, res) {
-  const male_shoe = await Product.find({ gender: "male" });
-  res.render(path + "/shop.hbs", { info: male_shoe });
-});
-app.post("/female", async function (req, res) {
-  const female_shoe = await Product.find({ gender: "female" });
-  res.render(path + "/shop.hbs", { info: female_shoe });
-});
-app.post("/crocs", async function (req, res) {
-  const crocs = await Product.find({ name: "crocs" });
-  res.render(path + "/shop.hbs", { info: crocs });
-});
-app.post("/under5k", async function (req, res) {
-  // await Product.find({
-  //     $and: [{ costInVal: {} }, { diet_id: req.body.id }],
-  // });
-  const under5k = Product.find({ costInVal: { $lt: 5000 } });
-  console.log(under5k);
-  res.render(path + "/shop.hbs", { info: under5k });
-});
+// app.post("/search_box", async function (req, res) {
+//   const name = req.body.shoe_name.toLowerCase();
+//   const shoes = await Product.find({ name: name });
+//   res.render(path + "/shop.hbs", { info: shoes });
+// });
 
-app.post("/addToCart", async function (req, res) {
-  console.log(session.userid);
-  await Cart.find().sort({ cart_id: -1 });
-  if (session == undefined) res.render("index", { message: "Kindly Login" });
-  const user = await Cart.findOne({ customer_id: session.userid }).sort({
-    cart_id: -1,
-  });
-  if (user) {
-    c = user.cart_id + 1;
-    console.log(c);
-  } else {
-    c = 1;
-  }
+// app.post("/male", async function (req, res) {
+//   const male_shoe = await Product.find({ gender: "male" });
+//   res.render(path + "/shop.hbs", { info: male_shoe });
+// });
+// app.post("/female", async function (req, res) {
+//   const female_shoe = await Product.find({ gender: "female" });
+//   res.render(path + "/shop.hbs", { info: female_shoe });
+// });
+// app.post("/crocs", async function (req, res) {
+//   const crocs = await Product.find({ name: "crocs" });
+//   res.render(path + "/shop.hbs", { info: crocs });
+// });
+// app.post("/under5k", async function (req, res) {
+//   // await Product.find({
+//   //     $and: [{ costInVal: {} }, { diet_id: req.body.id }],
+//   // });
+//   const under5k = Product.find({ costInVal: { $lt: 5000 } });
+//   console.log(under5k);
+//   res.render(path + "/shop.hbs", { info: under5k });
+// });
 
-  var cartItem = new Cart({
-    cart_id: c,
-    cus_id: session.userid,
-    prod_id: req.body.id,
-  });
-  console.log(session.userid);
-  console.log(req.body.id);
+// app.post("/addToCart", async function (req, res) {
+//   console.log(session.userid);
+//   await Cart.find().sort({ cart_id: -1 });
+//   if (session == undefined) res.render("index", { message: "Kindly Login" });
+//   const user = await Cart.findOne({ customer_id: session.userid }).sort({
+//     cart_id: -1,
+//   });
+//   if (user) {
+//     c = user.cart_id + 1;
+//     console.log(c);
+//   } else {
+//     c = 1;
+//   }
 
-  await cartItem.save();
-  const shoe = await Product.find({ product_id: req.body.id });
-  res.render(path + "/detail.hbs", { info: shoe });
-});
+//   var cartItem = new Cart({
+//     cart_id: c,
+//     cus_id: session.userid,
+//     prod_id: req.body.id,
+//   });
+//   console.log(session.userid);
+//   console.log(req.body.id);
 
-// Product.aggregate([
-//   {
-//     $lookup: {
-//       From: "Cart",
-//       LocalField: "product_id",
-//       foreignField: "prod_id",
-//       as: "user_cart",
-//     },
-//   },
-// ]);
+//   await cartItem.save();
+//   const shoe = await Product.find({ product_id: req.body.id });
+//   res.render(path + "/detail.hbs", { info: shoe });
+// });
 
-app.post("/cart", async function (req, res) {
-  if (session == undefined) res.sendFile(path + "/index.html");
-  else {
-    const result = await Product.aggregate[
-      {
-        $lookup: {
-          from: "carts",
-          localField: "product_id",
-          foreignField: "prod_id",
-          as: "cart_product",
-        },
-      }
-    ];
+// // Product.aggregate([
+// //   {
+// //     $lookup: {
+// //       From: "Cart",
+// //       LocalField: "product_id",
+// //       foreignField: "prod_id",
+// //       as: "user_cart",
+// //     },
+// //   },
+// // ]);
 
-    const test = await Cart.aggregate([
-      // {
-      //   $project: {
-      //     "Product.name": 1,
-      //     "Product.product_id": 1,
-      //     "Product.description": 1,
-      //     cust_id: 1,
-      //   },
-      // },
-      {
-        $lookup: {
-          from: "products",
-          localField: "prod_id",
-          foreignField: "product_id",
-          as: "cart_product",
-        },
-      },
-      {
-        $match: {
-          cus_id: "amithjagannath02@gmail.com",
-        },
-      },
-    ]);
+// app.post("/cart", async function (req, res) {
+//   if (session == undefined) res.sendFile(path + "/index.html");
+//   else {
+//     const result = await Product.aggregate[
+//       {
+//         $lookup: {
+//           from: "carts",
+//           localField: "product_id",
+//           foreignField: "prod_id",
+//           as: "cart_product",
+//         },
+//       }
+//     ];
 
-    const ans = await Cart.aggregate([
-      [
-        {
-          $lookup: {
-            from: "products",
-            localField: "prod_id",
-            foreignField: "product_id",
-            as: "result",
-          },
-        },
-        {
-          $addFields: {
-            array: {
-              $arrayElemAt: ["$result", 0],
-            },
-          },
-        },
-        {
-          $addFields: {
-            descrption: "$array.description",
-            image: "$array.images.img1",
-            cost: "$array.cost",
-            costInValue: "$array.costInVal",
-            total: {
-              $sum: "$array.costInVal",
-            },
-          },
-        },
-        {
-          $match: {
-            cus_id: session.userid,
-          },
-        },
-      ],
-    ]);
+//     const test = await Cart.aggregate([
+//       // {
+//       //   $project: {
+//       //     "Product.name": 1,
+//       //     "Product.product_id": 1,
+//       //     "Product.description": 1,
+//       //     cust_id: 1,
+//       //   },
+//       // },
+//       {
+//         $lookup: {
+//           from: "products",
+//           localField: "prod_id",
+//           foreignField: "product_id",
+//           as: "cart_product",
+//         },
+//       },
+//       {
+//         $match: {
+//           cus_id: "amithjagannath02@gmail.com",
+//         },
+//       },
+//     ]);
 
-    // const resul = await cart_product.find({});
-    // console.log(ans);
-    // const resu = await Product_cart.find({});
-    res.render(path + "/cart.hbs", { info: ans });
-  }
-});
-app.post("/checkout", async function (req, res) {
-  const id = req.body.id;
-  if (session == undefined) res.sendFile(path + "/index.html");
-  const product = await Product.findOne({ product_id: id });
-  const user = await Customer.findOne({ customer_id: session.userid });
-  var result = jsonMerger.mergeObjects([product, user]);
-  console.log(product);
-  res.render(path + "/checkout.hbs", { info: product });
-});
-app.post("/delete", async function (req, res) {
-  console.log("delete");
-  console.log(session.userid);
-  console.log(req.body.id);
-  const shoe = await Product.find({ product_id: req.body.id });
-  console.log(
-    await Cart.deleteOne({
-      $and: [{ cus_id: session.userid }, { prod_id: req.body.id }],
-    })
-  );
-  const ans = await Cart.aggregate([
-    [
-      {
-        $lookup: {
-          from: "products",
-          localField: "prod_id",
-          foreignField: "product_id",
-          as: "result",
-        },
-      },
-      {
-        $addFields: {
-          array: {
-            $arrayElemAt: ["$result", 0],
-          },
-        },
-      },
-      {
-        $addFields: {
-          descrption: "$array.description",
-          image: "$array.images.img1",
-          cost: "$array.cost",
-          costInValue: "$array.costInVal",
-        },
-      },
-      {
-        $match: {
-          cus_id: session.userid,
-        },
-      },
-    ],
-  ]);
-  // console.log(ans);
-  res.render(path + "/cart.hbs", { info: ans });
-});
+//     const ans = await Cart.aggregate([
+//       [
+//         {
+//           $lookup: {
+//             from: "products",
+//             localField: "prod_id",
+//             foreignField: "product_id",
+//             as: "result",
+//           },
+//         },
+//         {
+//           $addFields: {
+//             array: {
+//               $arrayElemAt: ["$result", 0],
+//             },
+//           },
+//         },
+//         {
+//           $addFields: {
+//             descrption: "$array.description",
+//             image: "$array.images.img1",
+//             cost: "$array.cost",
+//             costInValue: "$array.costInVal",
+//             total: {
+//               $sum: "$array.costInVal",
+//             },
+//           },
+//         },
+//         {
+//           $match: {
+//             cus_id: session.userid,
+//           },
+//         },
+//       ],
+//     ]);
 
-app.post("/under2k", async function (req, res) {
-  const result = await Product.find({ costInVal: { $lt: 2500 } });
-  res.render(path + "/shop.hbs", { info: result });
-});
-app.post("/under2-5k", async function (req, res) {
-  const result = await Product.find({ costInVal: { $gt: 2500, $lt: 5000 } });
-  res.render(path + "/shop.hbs", { info: result });
-});
-app.post("/under5-7k", async function (req, res) {
-  const result = await Product.find({ costInVal: { $gt: 5000, $lt: 7500 } });
-  res.render(path + "/shop.hbs", { info: result });
-});
-app.post("/under7k", async function (req, res) {
-  const result = await Product.find({ costInVal: { $gt: 7500 } });
-  res.render(path + "/shop.hbs", { info: result });
-});
+//     // const resul = await cart_product.find({});
+//     // console.log(ans);
+//     // const resu = await Product_cart.find({});
+//     res.render(path + "/cart.hbs", { info: ans });
+//   }
+// });
+// app.post("/checkout", async function (req, res) {
+//   const id = req.body.id;
+//   if (session == undefined) res.sendFile(path + "/index.html");
+//   const product = await Product.findOne({ product_id: id });
+//   const user = await Customer.findOne({ customer_id: session.userid });
+//   var result = jsonMerger.mergeObjects([product, user]);
+//   console.log(product);
+//   res.render(path + "/checkout.hbs", { info: product });
+// });
+// app.post("/delete", async function (req, res) {
+//   console.log("delete");
+//   console.log(session.userid);
+//   console.log(req.body.id);
+//   const shoe = await Product.find({ product_id: req.body.id });
+//   console.log(
+//     await Cart.deleteOne({
+//       $and: [{ cus_id: session.userid }, { prod_id: req.body.id }],
+//     })
+//   );
+//   const ans = await Cart.aggregate([
+//     [
+//       {
+//         $lookup: {
+//           from: "products",
+//           localField: "prod_id",
+//           foreignField: "product_id",
+//           as: "result",
+//         },
+//       },
+//       {
+//         $addFields: {
+//           array: {
+//             $arrayElemAt: ["$result", 0],
+//           },
+//         },
+//       },
+//       {
+//         $addFields: {
+//           descrption: "$array.description",
+//           image: "$array.images.img1",
+//           cost: "$array.cost",
+//           costInValue: "$array.costInVal",
+//         },
+//       },
+//       {
+//         $match: {
+//           cus_id: session.userid,
+//         },
+//       },
+//     ],
+//   ]);
+//   // console.log(ans);
+//   res.render(path + "/cart.hbs", { info: ans });
+// });
 
-app.post("/logout", async function (req, res) {
-  req.session.destroy();
-  res.sendFile(path + "/index.html");
-});
+// app.post("/under2k", async function (req, res) {
+//   const result = await Product.find({ costInVal: { $lt: 2500 } });
+//   res.render(path + "/shop.hbs", { info: result });
+// });
+// app.post("/under2-5k", async function (req, res) {
+//   const result = await Product.find({ costInVal: { $gt: 2500, $lt: 5000 } });
+//   res.render(path + "/shop.hbs", { info: result });
+// });
+// app.post("/under5-7k", async function (req, res) {
+//   const result = await Product.find({ costInVal: { $gt: 5000, $lt: 7500 } });
+//   res.render(path + "/shop.hbs", { info: result });
+// });
+// app.post("/under7k", async function (req, res) {
+//   const result = await Product.find({ costInVal: { $gt: 7500 } });
+//   res.render(path + "/shop.hbs", { info: result });
+// });
+
+// app.post("/logout", async function (req, res) {
+//   req.session.destroy();
+//   res.sendFile(path + "/index.html");
+// });
